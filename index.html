@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location-Based QR Clue</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        #qr-container { display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Find the Next Clue</h2>
+    <p>Go to the correct location to reveal the QR code!</p>
+    <button onclick="checkLocation()">Check My Location</button>
+    <div id="qr-container">
+        <h3>Scan to get your next clue!</h3>
+        <canvas id="qr-code"></canvas>
+    </div>
+
+    <script>
+        // List of locations (latitude, longitude, QR code links)
+        const locations = [
+            { lat: 47.6145, lon: -122.3208, qr: "https://example.com/clue1" }
+            { lat: 47.6246, lon: -122.3366, qr: "https://example.com/clue2" }
+            { lat: 47.6141, lon: -122.3453, qr: "https://example.com/clue3" }
+        ];
+        
+        function checkLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    let userLat = position.coords.latitude;
+                    let userLon = position.coords.longitude;
+                    
+                    locations.forEach(location => {
+                        if (isNearLocation(userLat, userLon, location.lat, location.lon)) {
+                            showQRCode(location.qr);
+                        }
+                    });
+                }, () => alert("Could not retrieve your location. Enable GPS and try again."));
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        
+        function isNearLocation(userLat, userLon, targetLat, targetLon) {
+            let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
+            return distance < 0.001; // Adjust the threshold as needed
+        }
+        
+        function showQRCode(url) {
+            let qr = new QRious({ element: document.getElementById("qr-code"), value: url, size: 200 });
+            document.getElementById("qr-container").style.display = "block";
+        }
+    </script>
+</body>
+</html>
