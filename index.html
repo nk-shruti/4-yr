@@ -54,7 +54,7 @@
         };
         function isNearLocation(userLat, userLon, targetLat, targetLon) {
             let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
-            return distance < 0.001; // Adjust the threshold as needed
+            return distance < 2; // Adjust the threshold as needed
         }
         
         function showQRCode(url) {
