@@ -22,28 +22,36 @@
     <script>
         // List of locations (latitude, longitude, QR code links)
         const locations = [
-            { lat: 47.6145, lon: -122.3208, qr: "https://example.com/clue1" }
-            { lat: 47.6246, lon: -122.3366, qr: "https://example.com/clue2" }
+            { lat: 47.6145, lon: -122.3208, qr: "https://example.com/clue1" },
+            { lat: 47.6246, lon: -122.3366, qr: "https://example.com/clue2" },
             { lat: 47.6141, lon: -122.3453, qr: "https://example.com/clue3" }
         ];
         
-        function checkLocation() {
+        window.checkLocation = function() {
+            alert("Checking your location...");
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     let userLat = position.coords.latitude;
                     let userLon = position.coords.longitude;
                     
+                    alert(`Your location: ${userLat}, ${userLon}`);
+                    
+                    let found = false;
                     locations.forEach(location => {
                         if (isNearLocation(userLat, userLon, location.lat, location.lon)) {
                             showQRCode(location.qr);
+                            found = true;
                         }
                     });
+
+                    if (!found) {
+                        alert("You're not at the right location yet. Try again!");
+                    }
                 }, () => alert("Could not retrieve your location. Enable GPS and try again."));
             } else {
                 alert("Geolocation is not supported by this browser.");
             }
-        }
-        
+        };
         function isNearLocation(userLat, userLon, targetLat, targetLon) {
             let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
             return distance < 0.001; // Adjust the threshold as needed
