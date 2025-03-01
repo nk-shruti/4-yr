@@ -52,6 +52,7 @@
         function showQRCode(url) {
             let qr = new QRious({ element: document.getElementById("qr-code"), value: url, size: 200 });
             document.getElementById("qr-container").style.display = "block";
+            alert("Success! QR code unlocked."); // Pop-up when QR code is revealed
         }
     </script>
 </body>
