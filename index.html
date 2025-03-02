@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location-Based QR Clue</title>
+    <title>fourth year lesgooo!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
@@ -11,9 +11,14 @@
     </style>
 </head>
 <body>
-    <h2>Find the Next Clue</h2>
-    <p>Go to the correct location to reveal the QR code!</p>
-    <button onclick="checkLocation()">Check My Location</button>
+    <h2> MISSING DIRECTIVE: where the hell are we going tonight? </h2>
+    <p>  !!!! follow the clues to the respective places IF YOU DARE !!!
+        in addition to the next clue, you will recieve a !!reward!! for every right location
+        but!!
+        if you get it wrong, you will be punished with a dare you MUST do to go on.
+        good luck, and may the odds be ever in your favor!
+    </p>
+    <button onclick="checkLocation()">click if you're sure!</button>
     <div id="qr-container">
         <h3>Scan to get your next clue!</h3>
         <canvas id="qr-code"></canvas>
@@ -24,34 +29,46 @@
         const locations = [
             { lat: 47.6145, lon: -122.3208, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
             { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
+            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
+            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
+            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
             { lat: 47.6141, lon: -122.3453, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" }
         ];
         
         window.checkLocation = function() {
-            alert("Checking your location...");
+            alert("activating scanner .... synchronizing with satellite ...");
+            // code to ask "Are you sure?" before continuing
+            // if no, don't check
+            // if yes, continue
+            
+
+
             if (navigator.geolocation) {
+                // how to remember the state??
                 navigator.geolocation.getCurrentPosition(position => {
                     let userLat = position.coords.latitude;
                     let userLon = position.coords.longitude;
                     
-                    alert(`Your location: ${userLat}, ${userLon}`);
+                    // alert(`Your current location:\nLatitude: ${userLat}\nLongitude: ${userLon}`); // Debugging alert to show location
                     
-                    let found = false;
-                    locations.forEach(location => {
-                        if (isNearLocation(userLat, userLon, location.lat, location.lon)) {
-                            showQRCode(location.qr);
-                            found = true;
+                    let target = locations[currentStep];
+                    if (isNearLocation(userLat, userLon, target.lat, target.lon)) {
+                        showQRCode(target.qr);
+                        currentStep++; // Move to the next step
+                        
+                        if (currentStep >= locations.length) {
+                            alert("Congrats on mission completion! Your final reward awaits at room # 539.");
+                        } else {
+                            alert("Congratulations on passing round " + currentStep + "! On to the next.");
                         }
-                    });
-
-                    if (!found) {
-                        alert("You're not at the right location yet. Try again!");
+                    } else {
+                        alert("NEGATIVE!! You're not at the right location yet. Try again!");
                     }
                 }, () => alert("Could not retrieve your location. Enable GPS and try again."));
             } else {
                 alert("Geolocation is not supported by this browser.");
             }
-        };
+        }
         function isNearLocation(userLat, userLon, targetLat, targetLon) {
             let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
             alert(`Distance!! : ${distance}`);
