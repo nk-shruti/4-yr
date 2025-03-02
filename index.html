@@ -6,21 +6,28 @@
     <title>fourth year lesgooo!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        #qr-container { display: none; margin-top: 20px; }
+        body { font-family: 'Courier New', monospace; text-align: left; padding: 20px; background-color: #111; color: #d00; }
+        h1, h3 { text-transform: uppercase; text-align: center; }
+        #qr-container { display: none; margin-top: 20px; padding: 10px; border: 2px solid #d00; background-color: #222; }
+        button { background-color: #d00; color: #fff; padding: 10px; border: 2px solid #fff; cursor: pointer; font-weight: bold; display: block; margin: 20px auto; }
+        .log-entry { font-size: 14px; background: #222; padding: 10px; border-left: 3px solid #d00; margin: 10px 0; }
+        .blinking-warning { color: #fff; background: #d00; padding: 10px; text-align: center; font-weight: bold; animation: blink 1s infinite alternate; }
+        @keyframes blink { from { opacity: 1; } to { opacity: 0; } }
     </style>
 </head>
 <body>
     <h2> MISSION OBJECTIVE: CULINARY LOCATION ACQUISITION </h2>
-    <p> !!!! FOLLOW THE CLUES TO THE DESIGNATED LOCATIONS OR FACE STARVATION !!!
-    <p> Each successfully retrieved data fragment will grant you access to classified intelligence, a reward you will be thankful for and a step closer to a luxurious meal.</p>
-    <p> BUT BE WARNED!! Incorrect location identification will trigger <b> COMPLIANCE ENFORCEMENT </b> – you will be punished with a dare that must be complete to successfully reprogram your behavior to lead to better predictions.</p>
-    <p> Fail too many times… and hunger will be your only companion.</p>
-    <p> REMEMBER – the closer you are to the target, the more accurate the data retrieval.</p> 
-    <p> Good luck, Operative. Your appetite depends on it.</p>
-    <p> WARNING: SYSTEM PROGRESS CANNOT BE RECOVERED!</p>
-    <p> If you close this tab, ALL progress will be lost—your mission will reset, and you’ll have to start over from zero.</p>.<br><br>
-    <p> Do not take this lightly. Ensure you have at least two devices for optimal tracking. Your survival may depend on it. Proceed carefully.
+    <p class="blinking-warning"> IMMEDIATE ACTION REQUIRED </p>
+    <p class="log-entry"> !!!! FOLLOW THE CLUES TO THE DESIGNATED LOCATIONS OR FACE STARVATION !!! </p>
+    <p class="log-entry"> Each successfully retrieved data fragment will grant you access to classified intelligence, a reward you will be thankful for and a step closer to a luxurious meal.</p>
+    <p class="log-entry"> BUT BE WARNED!! Incorrect location identification will trigger <b> COMPLIANCE ENFORCEMENT </b> – you will be punished with a dare that must be complete to successfully reprogram your behavior to lead to better predictions.</p>
+    <p class="log-entry"> Fail too many times… and hunger will be your only companion.</p>
+    <p class="log-entry"> REMEMBER – the closer you are to the target, the more accurate the data retrieval.</p> 
+    <p class="log-entry"> Good luck, Operative. Your appetite depends on it.</p><br><br>
+    <p class="blinking-warning"> WARNING !!!! </p>
+    <p class="log-entry"> SYSTEM PROGRESS CANNOT BE RECOVERED!</p>
+    <p class="log-entry"> If you close this tab, ALL progress will be lost—your mission will reset, and you’ll have to start over from zero.</p>
+    <p class="log-entry"> Do not take this lightly. Ensure you have at least two devices for optimal tracking. Your survival may depend on it. Proceed carefully.
     </p>
     <button onclick="checkLocation()">Engage Retrieval Protocol</button>
     <div id="qr-container">
@@ -77,7 +84,7 @@
         function isNearLocation(userLat, userLon, targetLat, targetLon) {
             let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
             alert(`Distance!! : ${distance}`);
-            return distance < 0.00002; // Adjust the threshold as needed
+            return distance < 0.002; // Adjust the threshold as needed
         }
         
         function showQRCode(url) {
