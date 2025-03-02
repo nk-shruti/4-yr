@@ -145,12 +145,15 @@
                 qr: "https://www.notion.so/DATA-FRAGMENT-01-1aaefcf01d4280b580eae19cd9130e77"
             }
         ];
+        
+        
+
         window.checkLocation = function() {
             alert("activating scanner .... synchronizing with satellite ...");
             // code to ask "Are you sure?" before continuing
             // if no, don't check
             // if yes, continue
-
+            let currentStep = localStorage.getItem("currentStep") ? parseInt(localStorage.getItem("currentStep")) : 0;
 
 
             if (navigator.geolocation) {
@@ -160,7 +163,7 @@
                     let userLon = position.coords.longitude;
                     
                     // alert(`Your current location:\nLatitude: ${userLat}\nLongitude: ${userLon}`); // Debugging alert to show location
-                    let currentStep = localStorage.getItem("currentStep") ? parseInt(localStorage.getItem("currentStep")) : 0;
+                    
         
                     let target = locations[currentStep];
                     if (isNearLocation(userLat, userLon, target.lat, target.lon)) {
@@ -227,19 +230,19 @@
             });
         }
 
-        function checkPassword() {
+        window.checkPassword = function() {
+            let incidentReport = document.getElementById("incident-report");
             let input = document.getElementById("password-input").value.toLowerCase();
-            // alert(input);
-            let matchedStep = locations.findIndex(loc => loc.password === input);
-            
+            let matchedStep = locations.findIndex(loc => loc.password && loc.password.toLowerCase() === input);
+        
             if (matchedStep !== -1) {
-                currentStep = matchedStep;
-                localStorage.setItem("currentStep", currentStep);
-                alert("Access granted. Resuming mission from checkpoint " + (currentStep + 1));
-                location.reload();
-            } else {
-                alert("Invalid code. Access denied.");
-            }
+                    currentStep = matchedStep;
+            localStorage.setItem("currentStep", currentStep);
+                    alert("Access granted. Resuming mission from checkpoint " + (currentStep + 1));
+                    updateIncidentReport(locations[currentStep]);
+        } else {
+            alert("Invalid code. Access denied.");
+        }
         }
     </script>
 </body>
