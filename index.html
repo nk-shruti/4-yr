@@ -61,7 +61,7 @@
                 lat: 17.4475318, lon: 78.3475359,
                 status: "Unknown",
                 objectClass: "[REDACTED]",
-                pass: "GNOCCHI",
+                password: "gnocchi",
                 threatLevel: "█████",
                 report: [
                     "[OBERVATION 1] Subject recalls formal interaction protocol initiated under containment restrictions enforced due to global biohazard event.",
@@ -76,7 +76,7 @@
             {
                 lat: 17.4475318, lon: 78.3475359,
                 status: "Secure",
-                pass: "KALE",
+                password: "kale",
                 objectClass: "Safe",
                 threatLevel: "Low",
                 report: [
@@ -89,7 +89,7 @@
             },
             {
                 lat: 17.4475318, lon: 78.3475359,
-                pass: "NACHOS",
+                password: "nachos",
                 status: "Secure",
                 objectClass: "A little too hot",
                 threatLevel: "Low",
@@ -104,7 +104,7 @@
             },
             {
                 lat: 17.4475318, lon: 78.3475359,
-                pass: "WHALE",
+                password: "whale",
                 status: "Secure",
                 objectClass: "Safe",
                 threatLevel: "Low",
@@ -121,7 +121,7 @@
             {
                 lat: 17.4475318, lon: 78.3475359,
                 status: "Secure",
-                pass: "SPAGHETTI",
+                password: "speghetti",
                 objectClass: "Safe",
                 threatLevel: "Low",
                 report: [
@@ -134,7 +134,7 @@
             {
                 lat: 17.4475318, lon: 78.3475359,
                 status: "Secure",
-                pass: "IDLI",
+                password: "idli",
                 objectClass: "Safe",
                 threatLevel: "Low",
                 report: [
@@ -198,10 +198,11 @@
         }
         function triggerDare() {
             const dares = [
+                 "Wear Shru's ugly christmas sweater for the next 30 minutes.",
+                "Wear Shru's T-SHIRT THAT YOU STOLE!!! the next 30 minutes.",
                 "Wear mismatched socks for 30 minutes.",
-                "Prounounce HAZARD as ha-zzard for the next 10 times you say it.",
-                "Do the V-step in front of strangers.",
-                "Wear Shru's ugly christmas sweater for the next 30 minutes."
+                "Prounounce HAZARD as ha-zaard for the next 10 times you say it.",
+                "Do the V-step in front of strangers."
             ];
             let dare = dares[Math.floor(Math.random() * dares.length)];
             alert(`[WARNING] Incorrect location detected. To proceed, you MUST complete the following behavior reprogramming task: \n\n${dare}`);
@@ -213,7 +214,7 @@
 
             document.getElementById("location").textContent = target.location;
             document.getElementById("status").textContent = target.status;
-            document.getElementById("password").textContent = target.pass;
+            document.getElementById("password").textContent = target.password;
             document.getElementById("object-class").textContent = target.objectClass;
             document.getElementById("threat-level").textContent = target.threatLevel;
 
@@ -228,6 +229,7 @@
 
         function checkPassword() {
             let input = document.getElementById("password-input").value.toLowerCase();
+            // alert(input);
             let matchedStep = locations.findIndex(loc => loc.password === input);
             
             if (matchedStep !== -1) {
