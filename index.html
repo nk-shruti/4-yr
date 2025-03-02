@@ -54,11 +54,12 @@
 
     
     <script>
-        var currentStep = 0;
+        // var currentStep = 0;
 
         const locations = [
             {
-                lat: 17.4475318, lon: 78.3475359,
+                // lat: 47.626592, lon: -122.341850,
+                lat: 47.613770, lon: -122.317032,
                 status: "Unknown",
                 objectClass: "[REDACTED]",
                 password: "gnocchi",
@@ -74,7 +75,8 @@
                 qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-1-1aaefcf01d4280b580eae19cd9130e77"
             },
             {
-                lat: 17.4475318, lon: 78.3475359,
+                // lat: 47.626592, lon: -122.341850,
+                lat: 47.614578, lon: -122.337189,
                 status: "Secure",
                 password: "kale",
                 objectClass: "Safe",
@@ -88,7 +90,8 @@
                 qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-2-1aaefcf01d42803da0bfd0cb391944db"
             },
             {
-                lat: 17.4475318, lon: 78.3475359,
+                // lat: 47.626592, lon: -122.341850,
+                lat: 47.6283818, lon: -122.3340169,
                 password: "nachos",
                 status: "Secure",
                 objectClass: "A little too hot",
@@ -103,7 +106,8 @@
                 qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-3-1aaefcf01d42805f8382ca72f1882793"
             },
             {
-                lat: 17.4475318, lon: 78.3475359,
+                // lat: 47.626592, lon: -122.341850,
+                lat: 47.613800, lon: -122.344920,
                 password: "whale",
                 status: "Secure",
                 objectClass: "Safe",
@@ -119,7 +123,8 @@
                 qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-4-1aaefcf01d428096a1dce1cf43aef519"
             },
             {
-                lat: 17.4475318, lon: 78.3475359,
+                // lat: 47.626592, lon: -122.341850,
+                lat: 47.624538, lon: -122.338654,
                 status: "Secure",
                 password: "speghetti",
                 objectClass: "Safe",
@@ -132,7 +137,8 @@
                 qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-5-1aaefcf01d42802fa9afcbb3325f3359"
             },
             {
-                lat: 17.4475318, lon: 78.3475359,
+                // lat: 17.4475318, lon: 78.3475359,
+                lat: 47.626592, lon: -122.341850,
                 status: "Secure",
                 password: "idli",
                 objectClass: "Safe",
@@ -154,7 +160,7 @@
             // if no, don't check
             // if yes, continue
             let currentStep = localStorage.getItem("currentStep") ? parseInt(localStorage.getItem("currentStep")) : 0;
-
+            alert(currentStep)
 
             if (navigator.geolocation) {
                 // how to remember the state??
@@ -179,6 +185,7 @@
                             }
                         }, 500);
                             currentStep++; // Move to next location, but wait for user to trigger next check
+                            localStorage.setItem("currentStep", currentStep);
                         } else {
                             alert("[ERROR] Incorrect coordinates. Compliance Protocols engaged.");
                             triggerDare();
@@ -197,7 +204,7 @@
         function showQRCode(url) {
             let qr = new QRious({ element: document.getElementById("qr-code"), value: url, size: 200 });
             document.getElementById("qr-container").style.display = "block";
-            alert("[SUCCESS] Data fragment retrieved. Standby for next directive."); // Pop-up when QR code is revealed
+            // alert("[SUCCESS] Data fragment retrieved. Standby for next directive."); // Pop-up when QR code is revealed
         }
         function triggerDare() {
             const dares = [
@@ -238,8 +245,10 @@
             if (matchedStep !== -1) {
                     currentStep = matchedStep;
             localStorage.setItem("currentStep", currentStep);
-                    alert("Access granted. Resuming mission from checkpoint " + (currentStep + 1));
-                    updateIncidentReport(locations[currentStep]);
+            alert("Access granted. Resuming mission from checkpoint " + (currentStep + 1));
+            let target = locations[currentStep];
+            updateIncidentReport(locations[currentStep]);
+            showQRCode(target.qr);
         } else {
             alert("Invalid code. Access denied.");
         }
