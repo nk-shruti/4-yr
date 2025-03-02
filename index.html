@@ -11,20 +11,24 @@
     </style>
 </head>
 <body>
-    <h2> MISSING DIRECTIVE: where the hell are we going tonight? </h2>
-    <p>  !!!! follow the clues to the respective places IF YOU DARE !!!
-        in addition to the next clue, you will recieve a !!reward!! for every right location
-        but!!
-        if you get it wrong, you will be punished with a dare you MUST do to go on.
-        good luck, and may the odds be ever in your favor!
+    <h2> MISSING DIRECTIVE: find out where we are going to celebrate 1460 days together on this planet. </h2>
+    <p>  !!!! FOLLOW THE CLUES AND DRIVE TO THE RIGHT LOCATION TO ACTIVATE NEXT CLUE !!!
+        in addition to the next clue, you will recieve a <br><reward<br> for every right location
+        BUT BEWARE! if you get it wrong, you will be punished with a dare you MUST complete in order to go on.
+        GOOD LUCK, and may the odds be ever in your favor! <br><br>
+
+        PLEASE NOTE: do not close this tab, otherwise ALL PROGRESS WILL BE LOST.
+        I repeat ALL PROGRESS WILL BE LOST.<br><br>
+        Do not take this warning lightly. Ensure you have at least 2 devices to follow along.
     </p>
     <button onclick="checkLocation()">click if you're sure!</button>
     <div id="qr-container">
-        <h3>Scan to get your next clue!</h3>
+        <h3>you may scan the QR code to get information on the next cloe</h3>
         <canvas id="qr-code"></canvas>
     </div>
 
     <script>
+        var currentStep = 0;
         // List of locations (latitude, longitude, QR code links)
         const locations = [
             { lat: 47.6145, lon: -122.3208, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
