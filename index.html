@@ -11,19 +11,20 @@
     </style>
 </head>
 <body>
-    <h2> MISSING DIRECTIVE: find out where we are going to celebrate 1460 days together on this planet. </h2>
-    <p>  !!!! FOLLOW THE CLUES AND DRIVE TO THE RIGHT LOCATION TO ACTIVATE NEXT CLUE !!!
-        in addition to the next clue, you will recieve a <br><reward<br> for every right location
-        BUT BEWARE! if you get it wrong, you will be punished with a dare you MUST complete in order to go on.
-        GOOD LUCK, and may the odds be ever in your favor! <br><br>
-
-        PLEASE NOTE: do not close this tab, otherwise ALL PROGRESS WILL BE LOST.
-        I repeat ALL PROGRESS WILL BE LOST.<br><br>
-        Do not take this warning lightly. Ensure you have at least 2 devices to follow along.
+    <h2> MISSION OBJECTIVE: CULINARY LOCATION ACQUISITION </h2>
+    <p>!!!! FOLLOW THE CLUES TO THE DESIGNATED LOCATIONS OR FACE STARVATION !!!
+    <p> Each successfully retrieved data fragment will grant you access to classified intelligence, a reward you will be thankful for and a **step closer to a luxurious meal.**</p>
+    <p>**BUT BE WARNED!!** Incorrect location identification will trigger **COMPLIANCE ENFORCEMENT** – you will be punished with a dare that must be complete to successfully reprogram your behavior to lead to better predictions.</p>
+    <p> Fail too many times… and hunger will be your only companion.</p>
+    <p> **REMEMBER** – the closer you are to the target, the more accurate the data retrieval.</p> 
+    <p> Good luck, Operative. Your appetite depends on it.</p>
+    <p> WARNING: SYSTEM PROGRESS CANNOT BE RECOVERED!</p>
+    <p> If you close this tab, ALL progress will be lost—your mission will reset, and you’ll have to start over from zero.</p>.<br><br>
+    <p> Do not take this lightly. Ensure you have at least two devices for optimal tracking. Your survival may depend on it. Proceed carefully.
     </p>
-    <button onclick="checkLocation()">click if you're sure!</button>
+    <button onclick="checkLocation()">Engage Retrieval Protocol</button>
     <div id="qr-container">
-        <h3>you may scan the QR code to get information on the next cloe</h3>
+        <h3>**DATA CODE LOCATED - PROCEED WITH EXTRACTION**</h3>
         <canvas id="qr-code"></canvas>
     </div>
 
@@ -31,7 +32,7 @@
         var currentStep = 0;
         // List of locations (latitude, longitude, QR code links)
         const locations = [
-            { lat: 47.6145, lon: -122.3208, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
+            { lat: 47.626592, lon: -122.341850, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
             { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
             { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
             { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
@@ -61,29 +62,39 @@
                         currentStep++; // Move to the next step
                         
                         if (currentStep >= locations.length) {
-                            alert("Congrats on mission completion! Your final reward awaits at room # 539.");
+                            alert("[MISSION COMPLETE] All fragments secured. Proceed to final reward: DINNER. Location details in #539");
                         } else {
-                            alert("Congratulations on passing round " + currentStep + "! On to the next.");
+                            alert("[NEXT OBJECTIVE] Proceed to the next data fragment site. You are one step closer to avoiding starvation.");
                         }
                     } else {
-                        alert("NEGATIVE!! You're not at the right location yet. Try again!");
+                        triggerDare();
                     }
-                }, () => alert("Could not retrieve your location. Enable GPS and try again."));
+                }, () => alert("[ALERT] Tracking failure. GPS disabled or anomalous interference detected."));
             } else {
-                alert("Geolocation is not supported by this browser.");
+                alert("[CRITICAL FAILURE] Geolocation is not supported by this browser. Manual override required.");
             }
         }
         function isNearLocation(userLat, userLon, targetLat, targetLon) {
             let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
             alert(`Distance!! : ${distance}`);
-            return distance < 2; // Adjust the threshold as needed
+            return distance < 0.00002; // Adjust the threshold as needed
         }
         
         function showQRCode(url) {
             let qr = new QRious({ element: document.getElementById("qr-code"), value: url, size: 200 });
             document.getElementById("qr-container").style.display = "block";
-            alert("Success! QR code unlocked."); // Pop-up when QR code is revealed
+            alert("[SUCCESS] Data fragment retrieved. Standby for next directive."); // Pop-up when QR code is revealed
         }
+        function triggerDare() {
+            const dares = [
+                "Wear mismatched socks for 30 minutes.",
+                "Prounounce HAZARD as ha-zzard for the next 10 times you say it.",
+                "Do the V-step in front of strangers.",
+                "Speak in an INDIAN accent for the next 5 minutes.",
+                "Wear Shru's ugly christmas sweater for the next 30 minutes."
+            ];
+            let dare = dares[Math.floor(Math.random() * dares.length)];
+            alert(`[CRITICAL WARNING] Incorrect location detected. To proceed, you MUST complete the following reprogramming task: \n\n${dare}`);
     </script>
 </body>
 </html>
