@@ -7,8 +7,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body { font-family: 'Courier New', monospace; text-align: left; padding: 20px; background-color: #111; color: #d00; }
-        h1, h3 { text-transform: uppercase; text-align: center; }
-        #qr-container { display: none; margin-top: 20px; padding: 10px; border: 2px solid #d00; background-color: #222; }
+        h1, h2, h3 { text-transform: uppercase; text-align: center; }
+        #qr-container { display: none; text-align: center; margin-top: 20px; padding: 10px; border: 2px solid #d00; background-color: #222; }
         button { background-color: #d00; color: #fff; padding: 10px; border: 2px solid #fff; cursor: pointer; font-weight: bold; display: block; margin: 20px auto; }
         .log-entry { font-size: 14px; background: #222; padding: 10px; border-left: 3px solid #d00; margin: 10px 0; }
         .blinking-warning { color: #fff; background: #d00; padding: 10px; text-align: center; font-weight: bold; animation: blink 1s infinite alternate; }
@@ -27,32 +27,130 @@
     <p class="blinking-warning"> WARNING !!!! </p>
     <p class="log-entry"> SYSTEM PROGRESS CANNOT BE RECOVERED!</p>
     <p class="log-entry"> If you close this tab, ALL progress will be lost—your mission will reset, and you’ll have to start over from zero.</p>
-    <p class="log-entry"> Do not take this lightly. Ensure you have at least two devices for optimal tracking. Your survival may depend on it. Proceed carefully.
-    </p>
+    <p class="log-entry"> Alternatively you can use the password from a current step to restart from checkpoint if progress is lost. </p>
     <button onclick="checkLocation()">Engage Retrieval Protocol</button>
+
+    <h3>Enter Password to Resume Mission:</h3>
+    <input type="text" id="password-input" placeholder="Enter secret code">
+    <button onclick="checkPassword()">Submit</button>
+
+    
+    <div id="incident-report" style="display: none;">
+        <h2>🔻 INCIDENT REPORT: SCP-████</h2>
+        <p><strong>▸ Location:</strong> <span id="location">Site-██</span></p>
+        <p><strong>▸ Status:</strong> <span id="status">Unknown</span></p>
+        <p><strong>▸ Object Class:</strong> <span id="object-class">[REDACTED]</span></p>
+        <p><strong>▸ Threat Level:</strong> <span id="threat-level">█████</span></p>
+        <p><strong>▸ PASSWORD:</strong> <span id="password">[REDACTED]</span></p>
+        
+        <h3>Field Report:</h3>
+        <ul id="field-report">
+        </ul>
+    </div>
     <div id="qr-container">
-        <h3>DATA CODE LOCATED - PROCEED WITH EXTRACTION</h3>
+        <h3>CLASSIFIED</h3>
         <canvas id="qr-code"></canvas>
     </div>
 
+    
     <script>
         var currentStep = 0;
-        // List of locations (latitude, longitude, QR code links)
+
         const locations = [
-            { lat: 47.626592, lon: -122.341850, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
-            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
-            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
-            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
-            { lat: 47.6246, lon: -122.3366, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" },
-            { lat: 47.6141, lon: -122.3453, qr: "https://internal-snowdrop-60d.notion.site/Clue-1-1aaefcf01d4280b580eae19cd9130e77" }
+            {
+                lat: 17.4475318, lon: 78.3475359,
+                status: "Unknown",
+                objectClass: "[REDACTED]",
+                pass: "GNOCCHI",
+                threatLevel: "█████",
+                report: [
+                    "[OBERVATION 1] Subject recalls formal interaction protocol initiated under containment restrictions enforced due to global biohazard event.",
+                    "[OBERVATION 2] Visual records indicate figures clad in black.",
+                    "[OBERVATION 3] Subject was issued <strong>botanical anomaly (red variant)</strong> - immediate rejection observed.",
+                    "[OBERVATION 4] Unidentified <strong>dry carbonated substance</strong> consumed via improvised containment vessels <strong>(Red solo-class containment units)</strong> in civilian environment.",
+                    "[OBERVATION 5] Core subjects engaged in discourse of unknown significance while consuming a high-starch, semi-gelatinous sustenance compound.",
+                    "[OBERVATION 6] Post-interaction log suggests high morale & █████ engagement."
+                ],
+                qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-1-1aaefcf01d4280b580eae19cd9130e77"
+            },
+            {
+                lat: 17.4475318, lon: 78.3475359,
+                status: "Secure",
+                pass: "KALE",
+                objectClass: "Safe",
+                threatLevel: "Low",
+                report: [
+                    "[OBSERVATION 1] Subject was presented with a formal interaction protocol request, initiating a <strong>social classification</strong> shift.",
+                    "[OBSERVATION 2] Post-interaction analysis indicates a state of internal safety juxtaposed with external chillness following █████ engagement in an open-air setting.",
+                    "[OBSERVATION 3] Relationship status reclassification initiated. Subject transitioned from 'exclusive non-binding' to 'partner class stability'",
+                    "[OBSERVATION 4] Psychological imprint suggests increased neural ecstasy post-reclassification event",
+                ],
+                qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-2-1aaefcf01d42803da0bfd0cb391944db"
+            },
+            {
+                lat: 17.4475318, lon: 78.3475359,
+                pass: "NACHOS",
+                status: "Secure",
+                objectClass: "A little too hot",
+                threatLevel: "Low",
+                report: [
+                    "[OBSERVATION 1] Subjects engaged in high-risk behavioral deviation near an unidentified water body in an unsecured public civilian sector.",
+                    "[OBSERVATION 2] Incident occurred during nocturnal hours, recorded between 00:00 - 01:00 local time. Reduced civilian presence noted, but non-zero probability of external observation.",
+                    "[OBSERVATION 3] Visual records indicate subjects were soon joined by an unidentified entity of Partner-Class designation.",
+                    "[OBSERVATION 4] Activity approached legal threshold for breach of RCW 9A.88.010 - immediate termination of █████ engagement prevented escalation.",
+                    "[OBSERVATION 5] Psychological markers indicate elevated neural stimulation concurrent with risk exposure. Subjects self-reported increased adrenaline and thrill response.",
+                ],
+                qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-3-1aaefcf01d42805f8382ca72f1882793"
+            },
+            {
+                lat: 17.4475318, lon: 78.3475359,
+                pass: "WHALE",
+                status: "Secure",
+                objectClass: "Safe",
+                threatLevel: "Low",
+                report: [
+                    "[OBSERVATION 1] Subjects entered a dimly lit containment zone designated as Site-2222 at approximately ██ hours.",
+                    "[OBSERVATION 2] Subjects engaged in interaction with two additional entities classified as Partner-Class. One entity exhibited behavioral markers indicative of anniversary recognition, linked to prior exposure to high-velocity ballistic trauma in an active conflict zone.",
+                    "[OBSERVATION 3] Establishment initiated terminal operational phase, triggering unknown beverage formulation protocols. Experimental liquid compounds were synthesized, deviating from standard menu parameters.",
+                    "[OBSERVATION 4] Subjects ingested undocumented liquid beverages, leading to recorded physiological and cognitive deviations. Immediate reactions included increased sensory sensitivity and altered conversational patterns.",
+                    "[OBSERVATION 5] Incident log identifies this as a pivotal event marking the initiation of Subject's psychological self-evaluation and sustained neurodivergent awareness trajectory."
+                ]
+                ,
+                qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-4-1aaefcf01d428096a1dce1cf43aef519"
+            },
+            {
+                lat: 17.4475318, lon: 78.3475359,
+                status: "Secure",
+                pass: "SPAGHETTI",
+                objectClass: "Safe",
+                threatLevel: "Low",
+                report: [
+                    "[OBSERVATION 1] Subjects exhibit recurring presence at designated containment zone (Site-█████) at a consistent temporal cadence.",
+                    "[OBSERVATION 2] Subject repeatedly requests an off-menu biochemical variant (█████), deviating from standard Menu parameters. Waitstaff (Entity-██) exhibits non-standard enthusiasm, administering ethanol augmentation for subjects.",
+                    "[OBSERVATION 3] Subjects consume neurochemical-altering liquid compounds delivered in oversized containment vessels",
+                ],
+                qr: "https://www.notion.so/CLASSIFIED-INTELLIGENCE-5-1aaefcf01d42802fa9afcbb3325f3359"
+            },
+            {
+                lat: 17.4475318, lon: 78.3475359,
+                status: "Secure",
+                pass: "IDLI",
+                objectClass: "Safe",
+                threatLevel: "Low",
+                report: [
+                    "[OBSERVATION 1] Subjects transitioned into a designated long-term containment zone (Site-██) at approximately ██ hours, finalizing Partner-Class classification under controlled conditions.",
+                    "[OBSERVATION 2] The containment zone is structured into three distinct operational sectors, each assigned a specialized function, enabling high levels of organization and operational efficiency.",
+                    "[OBSERVATION 3] Initial adaptation phase recorded significant environmental adjustments. Post-integration analysis suggests a sustained increase in relational cohesion and █████ engagement.",
+                ],
+                qr: "https://www.notion.so/DATA-FRAGMENT-01-1aaefcf01d4280b580eae19cd9130e77"
+            }
         ];
-        
         window.checkLocation = function() {
             alert("activating scanner .... synchronizing with satellite ...");
             // code to ask "Are you sure?" before continuing
             // if no, don't check
             // if yes, continue
-            
+
 
 
             if (navigator.geolocation) {
@@ -62,28 +160,34 @@
                     let userLon = position.coords.longitude;
                     
                     // alert(`Your current location:\nLatitude: ${userLat}\nLongitude: ${userLon}`); // Debugging alert to show location
-                    
+                    let currentStep = localStorage.getItem("currentStep") ? parseInt(localStorage.getItem("currentStep")) : 0;
+        
                     let target = locations[currentStep];
                     if (isNearLocation(userLat, userLon, target.lat, target.lon)) {
+                        updateIncidentReport(target);
                         showQRCode(target.qr);
-                        currentStep++; // Move to the next step
                         
-                        if (currentStep >= locations.length) {
-                            alert("[MISSION COMPLETE] All fragments secured. Proceed to final reward: DINNER. Location details in #539");
+                        // alert(currentStep);
+                        setTimeout(() => {
+                            if (currentStep >= locations.length) {
+                                alert('[MISSION SUCCESS] Mission complete.');
+                            } else {
+                                alert('[OBJECTIVE ' + currentStep + ' SUCCESS] Data retrieved. Proceed with next objective.');
+                            }
+                        }, 500);
+                            currentStep++; // Move to next location, but wait for user to trigger next check
                         } else {
-                            alert("[NEXT OBJECTIVE] Proceed to the next data fragment site. You are one step closer to avoiding starvation.");
+                            alert("[ERROR] Incorrect coordinates. Compliance Protocols engaged.");
+                            triggerDare();
                         }
-                    } else {
-                        triggerDare();
-                    }
-                }, () => alert("[ALERT] Tracking failure. GPS disabled or anomalous interference detected."));
-            } else {
-                alert("[CRITICAL FAILURE] Geolocation is not supported by this browser. Manual override required.");
-            }
-        }
+                    }, () => alert("[ALERT] GPS tracking failure. Manual override required."));
+                } else {
+                    alert("[CRITICAL FAILURE] Geolocation unsupported. Aborting mission.");
+                }
+}
         function isNearLocation(userLat, userLon, targetLat, targetLon) {
             let distance = Math.sqrt(Math.pow(userLat - targetLat, 2) + Math.pow(userLon - targetLon, 2));
-            alert(`Distance!! : ${distance}`);
+            // alert(`Distance!! : ${distance}`);
             return distance < 0.002; // Adjust the threshold as needed
         }
         
@@ -97,11 +201,43 @@
                 "Wear mismatched socks for 30 minutes.",
                 "Prounounce HAZARD as ha-zzard for the next 10 times you say it.",
                 "Do the V-step in front of strangers.",
-                "Speak in an INDIAN accent for the next 5 minutes.",
                 "Wear Shru's ugly christmas sweater for the next 30 minutes."
             ];
             let dare = dares[Math.floor(Math.random() * dares.length)];
             alert(`[WARNING] Incorrect location detected. To proceed, you MUST complete the following behavior reprogramming task: \n\n${dare}`);
+        }
+
+        function updateIncidentReport(target) {
+            let incidentReport = document.getElementById("incident-report");
+            incidentReport.style.display = "block";
+
+            document.getElementById("location").textContent = target.location;
+            document.getElementById("status").textContent = target.status;
+            document.getElementById("password").textContent = target.pass;
+            document.getElementById("object-class").textContent = target.objectClass;
+            document.getElementById("threat-level").textContent = target.threatLevel;
+
+            let reportList = document.getElementById("field-report");
+            reportList.innerHTML = "";
+            target.report.forEach(item => {
+                let li = document.createElement("li");
+                li.innerHTML = item;
+                reportList.appendChild(li);
+            });
+        }
+
+        function checkPassword() {
+            let input = document.getElementById("password-input").value.toLowerCase();
+            let matchedStep = locations.findIndex(loc => loc.password === input);
+            
+            if (matchedStep !== -1) {
+                currentStep = matchedStep;
+                localStorage.setItem("currentStep", currentStep);
+                alert("Access granted. Resuming mission from checkpoint " + (currentStep + 1));
+                location.reload();
+            } else {
+                alert("Invalid code. Access denied.");
+            }
         }
     </script>
 </body>
